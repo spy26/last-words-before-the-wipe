@@ -55,4 +55,14 @@ for (const dir of landed) {
   }
 }
 
+// Final single-line guard, right before printing: scan the entry for any
+// line-break character anywhere inside it. A multi-line entry must never
+// reach stdout; report it on stderr and stop with a non-zero status.
+for (const ch of LINE) {
+  if (ch === "\n" || ch === "\r") {
+    console.error("entry must be a single line: line break found in entry text");
+    process.exit(1);
+  }
+}
+
 console.log(LINE);
